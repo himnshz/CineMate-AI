@@ -1,0 +1,14 @@
+# CineMate Care - Frontend Dependencies
+# Install with: pip install -r requirements.txt
+
+# Web Dashboard
+streamlit>=1.29.0                        # Main dashboard framework
+streamlit-autorefresh>=1.0.1             # Auto-refresh component
+
+# Data & Visualization
+pandas>=2.0.0                            # Data handling
+plotly>=5.18.0                           # Interactive charts
+numpy>=1.24.0                            # Numerical operations
+
+# Image Processing
+Pillow>=10.0.0                           # Image loading and display
