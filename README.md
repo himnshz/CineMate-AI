@@ -2,21 +2,40 @@
 
 **AI-Powered Cognitive Companion for Elderly Users**
 
-CineMate Care is an intelligent movie-watching companion that helps elderly users and those with visual impairments enjoy media content. It provides real-time scene descriptions, emotional support, and voice interaction - like having a caring friend explain what's happening on screen.
+CineMate Care is an intelligent movie-watching companion designed to help elderly users and those with visual impairments enjoy media content. It provides real-time scene descriptions, emotional support, and voice interaction — like having a caring friend explain what's happening on screen.
 
 ![Azure](https://img.shields.io/badge/Azure-AI%20Foundry-0078D4?style=flat&logo=microsoft-azure)
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat&logo=python)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat&logo=streamlit)
+![CI](https://github.com/himnshz/CineMate-AI/actions/workflows/ci.yml/badge.svg)
+
+---
+
+## 🚀 Try It Now (No Azure Required!)
+
+**Run in demo mode** — no cloud credentials needed:
+
+```bash
+git clone https://github.com/himnshz/CineMate-AI.git
+cd CineMate-AI
+pip install -r backend/requirements.txt
+cd backend
+python main.py --demo
+```
+
+This uses simulated AI services so you can instantly experience the concept!
 
 ---
 
 ## ✨ Features
 
-- **🎥 Real-Time Scene Analysis** - Azure AI Vision describes what's happening on screen
-- **🧠 Intelligent Commentary** - GPT-4o decides when and what to say (never interrupts dialogue!)
-- **🗣️ Natural Voice** - Azure Speech provides warm, emotional voice output
-- **🛡️ Safety Monitoring** - Detects user distress and offers comfort
-- **📊 Caregiver Dashboard** - Real-time monitoring via Streamlit
+| Feature | Description |
+|---------|-------------|
+| 🎥 **Scene Analysis** | Real-time description of what's happening on screen |
+| 🧠 **Smart Commentary** | AI decides when and what to say (never interrupts dialogue!) |
+| 🗣️ **Natural Voice** | Warm, emotional voice output for a companion-like experience |
+| 🛡️ **Safety Monitoring** | Detects user distress and offers comfort |
+| 📊 **Caregiver Dashboard** | Remote monitoring via Streamlit interface |
 
 ---
 
@@ -46,106 +65,74 @@ CineMate Care is an intelligent movie-watching companion that helps elderly user
 
 ---
 
-## 🚀 Quick Start
+## 📦 Installation
 
 ### Prerequisites
 
 - Python 3.9+
-- Webcam
-- Microphone & Speakers
-- Azure subscription with:
-  - **Azure AI Vision** (Computer Vision)
-  - **Azure AI Foundry** (with GPT-4o deployed)
-  - **Azure Speech Service**
+- Webcam (optional for demo mode)
+- Microphone & Speakers (optional)
 
-### 1. Clone the Repository
+### Quick Setup
 
 ```bash
+# Clone repository
 git clone https://github.com/himnshz/CineMate-AI.git
 cd CineMate-AI
-```
 
-### 2. Create Virtual Environment
-
-```bash
+# Create virtual environment
 python -m venv .venv
+.venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # macOS/Linux
 
-# Windows
-.venv\Scripts\activate
-
-# macOS/Linux
-source .venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-```bash
+# Install dependencies
 pip install -r backend/requirements.txt
 pip install -r frontend/requirements.txt
 ```
 
-### 4. Configure Azure Credentials
+### Running Modes
 
-Create a `.env` file in the `backend/` folder:
-
-```env
-# Azure AI Vision
-AZURE_VISION_ENDPOINT=https://your-vision-resource.cognitiveservices.azure.com/
-AZURE_VISION_KEY=your-vision-api-key
-
-# Azure AI Foundry (OpenAI)
-AZURE_OPENAI_ENDPOINT=https://your-foundry-resource.openai.azure.com/
-AZURE_OPENAI_KEY=your-openai-api-key
-AZURE_OPENAI_DEPLOYMENT=gpt-4o
-
-# Azure Speech
-AZURE_SPEECH_KEY=your-speech-api-key
-AZURE_SPEECH_REGION=eastus
-
-# App Settings
-TTS_VOICE=en-US-DavisNeural
-WAKE_WORD=CineMate
-```
-
-### 5. Run the Application
-
-**Terminal 1 - Backend:**
-```bash
-cd backend
-python main.py
-```
-
-**Terminal 2 - Dashboard:**
-```bash
-cd frontend
-streamlit run app.py
-```
+| Mode | Command | Requirements |
+|------|---------|--------------|
+| **Demo** | `python main.py --demo` | None! |
+| **Simulator** | `python main.py --sim` | Azure Vision + OpenAI |
+| **Full** | `python main.py` | All Azure services |
 
 ---
 
-## ☁️ Azure Setup Guide
+## ☁️ Azure Setup (Optional)
 
-### Azure AI Vision (Computer Vision)
+For full functionality with real AI services:
 
-1. Go to [Azure Portal](https://portal.azure.com/)
-2. Create resource → **Computer Vision**
-3. Copy **Endpoint** and **Key** to `.env`
+### 1. Azure AI Vision
+1. Go to [Azure Portal](https://portal.azure.com/) → Create **Computer Vision** resource
+2. Copy Endpoint and Key
 
-### Azure AI Foundry (GPT-4o)
-
+### 2. Azure AI Foundry (GPT-4o)
 1. Go to [Azure AI Foundry](https://ai.azure.com/)
-2. Create or select a **Project**
-3. Go to **Model catalog** → Find **gpt-4o**
-4. Click **Deploy** → Name it `gpt-4o`
-5. After deployment, copy the **Endpoint URL** to `.env`
+2. Create/select a Project → Go to **Model catalog** → Deploy **gpt-4o**
+3. Name deployment `gpt-4o` → Copy Endpoint URL
 
-> **Important:** The deployment name in Azure AI Foundry must match `AZURE_OPENAI_DEPLOYMENT` in your `.env` file.
+### 3. Azure Speech
+1. Azure Portal → Create **Speech** resource
+2. Copy Key and note Region
 
-### Azure Speech Service
+### 4. Configure .env
+Create `backend/.env`:
+```env
+AZURE_VISION_ENDPOINT=https://your-resource.cognitiveservices.azure.com/
+AZURE_VISION_KEY=your-key
 
-1. Go to [Azure Portal](https://portal.azure.com/)
-2. Create resource → **Speech**
-3. Copy **Key** and note the **Region**
+AZURE_OPENAI_ENDPOINT=https://your-foundry.openai.azure.com/
+AZURE_OPENAI_KEY=your-key
+AZURE_OPENAI_DEPLOYMENT=gpt-4o
+
+AZURE_SPEECH_KEY=your-key
+AZURE_SPEECH_REGION=eastus
+
+TTS_VOICE=en-US-DavisNeural
+WAKE_WORD=CineMate
+```
 
 ---
 
@@ -155,66 +142,75 @@ streamlit run app.py
 CineMate-AI/
 ├── backend/
 │   ├── main.py              # Main orchestrator
-│   ├── vision_capture.py    # Azure AI Vision integration
-│   ├── cognitive_engine.py  # Azure OpenAI (GPT-4o) integration
-│   ├── voice_interface.py   # Azure Speech TTS/STT
-│   ├── demo_mode.py         # Demo/backup mode
-│   └── requirements.txt
+│   ├── vision_capture.py    # Azure AI Vision
+│   ├── cognitive_engine.py  # Azure OpenAI (GPT-4o)
+│   ├── voice_interface.py   # Azure Speech
+│   ├── mock_services.py     # Demo mode (no Azure)
+│   └── tests/               # Unit tests
 ├── frontend/
-│   ├── app.py               # Streamlit dashboard
-│   └── requirements.txt
-├── docs/
-│   └── demo_script.md       # Demo presentation script
+│   └── app.py               # Streamlit dashboard
+├── .github/
+│   ├── workflows/ci.yml     # CI pipeline
+│   └── ISSUE_TEMPLATE/      # Bug/feature templates
+├── CONTRIBUTING.md
 └── README.md
 ```
+
+---
+
+## 🗺️ Roadmap
+
+### ✅ Phase 1: Core MVP (Current)
+- [x] Azure AI Vision integration
+- [x] Azure OpenAI (GPT-4o) integration
+- [x] Azure Speech TTS/STT
+- [x] Demo mode (no Azure required)
+- [x] Caregiver dashboard
+
+### 🚧 Phase 2: Enhanced Experience
+- [ ] Character memory across sessions
+- [ ] Personalized user profiles
+- [ ] Multi-language support
+- [ ] Mobile app for caregivers
+
+### 🔮 Phase 3: Healthcare Integration
+- [ ] Integration with health monitoring
+- [ ] Emotional wellness tracking
+- [ ] Professional caregiver portal
+- [ ] HIPAA-compliant deployment
 
 ---
 
 ## 🎮 Usage
 
 ### Voice Commands
-
 | Command | Action |
 |---------|--------|
-| "CineMate" | Wake word - activates the AI |
-| "What's happening?" | Describes the current scene |
-| "Who is that?" | Character identification |
-| "Help" / "Stop" | Triggers safety response |
+| "CineMate" | Wake word - activates AI |
+| "What's happening?" | Scene description |
+| "Who is that?" | Character info |
+| "Help" / "Stop" | Safety response |
 
-### Keyboard Shortcuts (Demo Mode)
-
-| Key | Response |
-|-----|----------|
-| SPACE | Smart context response |
-| F1 | Greeting |
-| F2 | Scene description |
-| F3 | Answer question |
-| F4 | Distress response |
+### Dashboard
+```bash
+cd frontend
+streamlit run app.py
+```
 
 ---
 
-## 🛡️ Safety Features
+## 🤝 Contributing
 
-- **Distress Detection** - Monitors for keywords like "help", "scared", "stop"
-- **Comfort Mode** - Offers to pause content during overwhelming scenes
-- **Guardian Dashboard** - Caregivers can monitor remotely
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
 ## 🏆 Built For
 
-**Microsoft Imagine Cup 2026** - Accessibility & Healthcare Track
+**Microsoft Imagine Cup 2026** — Accessibility & Healthcare Track
 
 ---
 
 ## 📄 License
 
-MIT License - See [LICENSE](LICENSE) for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Microsoft Azure AI Services
-- OpenAI GPT-4o
-- Streamlit Community
+MIT License — See [LICENSE](LICENSE) for details.

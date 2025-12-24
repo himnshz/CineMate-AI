@@ -495,6 +495,66 @@ def main():
     """Main entry point for CineMate Care."""
     global orchestrator
     
+    # Check for --demo flag (runs without Azure credentials)
+    demo_mode = '--demo' in sys.argv or '--mock' in sys.argv
+    
+    if demo_mode:
+        print("""
+    ╔═══════════════════════════════════════════════════════════════════════════╗
+    ║                                                                           ║
+    ║   🎬 CineMate Care - DEMO MODE                                           ║
+    ║                                                                           ║
+    ║   Running WITHOUT Azure credentials!                                      ║
+    ║   All AI services are simulated for demonstration purposes.              ║
+    ║                                                                           ║
+    ║   To use real Azure services, configure your .env file.                  ║
+    ║   See README.md for setup instructions.                                   ║
+    ║                                                                           ║
+    ║   Press Ctrl+C to stop                                                    ║
+    ║                                                                           ║
+    ╚═══════════════════════════════════════════════════════════════════════════╝
+        """)
+        
+        # Import and run demo mode
+        from mock_services import MockVisionCapture, MockCognitiveEngine, MockVoiceInterface
+        
+        logger.info("🎬 Starting CineMate Care in DEMO MODE")
+        
+        # Create mock services
+        vision = MockVisionCapture()
+        engine = MockCognitiveEngine()
+        voice = MockVoiceInterface()
+        
+        # Simple demo loop
+        voice.speak_async("Hello! I'm CineMate Care running in demo mode. All AI services are simulated.", style="cheerful")
+        
+        vision.start_camera()
+        try:
+            import time
+            loop_count = 0
+            while True:
+                loop_count += 1
+                ret, frame = vision.get_frame()
+                result = vision.process_frame(frame)
+                
+                if result:
+                    caption = result["caption"]["text"]
+                    decision = engine.analyze_context(caption)
+                    
+                    if decision.get("should_speak") and decision.get("content"):
+                        voice.speak_async(decision["content"], style=decision.get("emotion", "neutral"))
+                
+                time.sleep(0.5)
+                
+        except KeyboardInterrupt:
+            print("\n\n⚡ Demo stopped by user")
+        finally:
+            vision.stop_camera()
+            voice.speak_async("Goodbye! Thanks for trying CineMate Care demo.", style="cheerful")
+        
+        return
+    
+    # Normal mode with Azure services
     print("""
     ╔═══════════════════════════════════════════════════════════════╗
     ║                                                               ║
@@ -506,6 +566,8 @@ def main():
     ║   • Azure Speech Service - Voice Interaction                 ║
     ║                                                               ║
     ║   Press Ctrl+C to stop                                        ║
+    ║                                                               ║
+    ║   💡 Tip: Run with --demo flag to try without Azure          ║
     ║                                                               ║
     ╚═══════════════════════════════════════════════════════════════╝
     """)
@@ -528,11 +590,14 @@ def main():
         logger.error(f"Configuration error: {e}")
         print(f"\n❌ Configuration Error: {e}")
         print("\nPlease ensure your .env file is configured correctly.")
-        print("See .env.example for required variables.")
+        print("Or run with --demo flag to try without Azure credentials:")
+        print("    python main.py --demo")
         sys.exit(1)
     except Exception as e:
         logger.error(f"Fatal error: {e}")
         print(f"\n❌ Fatal Error: {e}")
+        print("\nTip: Run with --demo flag to try without Azure credentials:")
+        print("    python main.py --demo")
         sys.exit(1)
 
 
