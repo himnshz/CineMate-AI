@@ -5,7 +5,8 @@
 # Environment and secrets (CRITICAL - contains API keys)
 .env
 *.env.local
-.env.*
+# Note: .env.example is allowed (it's a template without secrets)
+!.env.example
 
 # Python
 __pycache__/

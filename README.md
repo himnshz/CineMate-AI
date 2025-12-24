@@ -205,6 +205,10 @@ Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ---
 
+## ❓ Troubleshooting
+
+Having issues? See [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) for common problems and solutions.
+
 ## 🏆 Built For
 
 **Microsoft Imagine Cup 2026** — Accessibility & Healthcare Track
